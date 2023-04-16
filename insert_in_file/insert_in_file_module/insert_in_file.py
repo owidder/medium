@@ -27,8 +27,8 @@ class Can_not_insert_line_exception(Exception):
 
 def find_line_to_insert(fsm_results: list, key_to_insert: str) -> (int, bool, bool):
     for _index, element in enumerate(fsm_results):
-        if element[1].lower().strip().startswith(key_to_insert.lower()):
-            return (0, False, True)
+        if len(element) == 1 or element[1].lower().strip().startswith(key_to_insert.lower()):
+            return (int(element[0]), False, True)
         elif element[1].lower() > key_to_insert.lower():
             return (int(element[0]), False, False)
         elif len(element[1]) == 0:
@@ -49,12 +49,12 @@ def insert_into_file_with_template_and_key(
     fsm = textfsm.TextFSM(io.StringIO(template_with_line_number_rules))
     fsm_result = fsm.ParseText("".join(file_content))
     line_to_insert, end_marker_found, same_line = find_line_to_insert(fsm_result, key_to_insert)
-    text_to_insert_with_cr = text_to_insert if text_to_insert.endswith("\n") else text_to_insert + "\n"
     with open(file_path, "w") as file:
         lines = file.readlines()
         if line_to_insert is not None:
             if same_line:
-                lines[line_to_insert] = text_to_insert_with_cr
+                number_of_lines_to_insert = len(text_to_insert.split("\n"))
+                lines[line_to_insert:line_to_insert+number_of_lines_to_insert] = text_to_insert
             else:
-                lines.insert(line_to_insert - (1 if end_marker_found else offset), text_to_insert_with_cr)
+                lines.insert(line_to_insert - (1 if end_marker_found else offset), text_to_insert if text_to_insert.endswith("\n") else text_to_insert + "\n")
         file.write("".join(lines))

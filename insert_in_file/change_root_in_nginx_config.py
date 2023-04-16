@@ -1,9 +1,9 @@
-from .insert_in_file import insert_into_file_with_template_and_key
+from insert_in_file_module.insert_in_file import insert_into_file_with_template_and_key
 
 
 TEMPLATE = """
 Start
-  ^\s+location ~ \^/(images.*: -> LocationSection
+  ^\s+location ~ .*images.* -> LocationSection
 
 LocationSection
   ^\s+root.* -> Record

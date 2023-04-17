@@ -26,7 +26,6 @@ with open("./nginx.conf") as nginx_read:
     line_number = int(fsm_result[0][0])
     content_lines = content.split("\n")
     content_lines.insert(line_number - 1, NEW_LOCATION_LINES)
-    print("\n".join(content_lines))
 
 with open("./nginx.conf", "w") as nginx_write:
     nginx_write.write("\n".join(content_lines))

@@ -16,7 +16,6 @@ NEW_LOCATION_LINES = """
         location ~ \.(gif|jpg|png)$ {
             root /data/images;
         }
-    
 """
 
 textfsm_with_line_numbers = TextFSM_with_line_numbers(StringIO(FSM_TEMPLATE))

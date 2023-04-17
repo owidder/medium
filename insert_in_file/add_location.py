@@ -1,4 +1,4 @@
-from insert_in_file_module.textfsm_with_line_numbers import TextFSM_with_line_numbers
+from textfsm.textfsm_with_line_numbers import TextFSM_with_line_numbers
 from io import StringIO
 
 FSM_TEMPLATE = """
